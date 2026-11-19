@@ -1,0 +1,5 @@
+# Never commit the security rules file: it contains the starting club admin password.
+firestore.rules
+.DS_Store
+.vercel
+node_modules

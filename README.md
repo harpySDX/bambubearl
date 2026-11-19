@@ -1,65 +1,55 @@
-# EMSS 3D Print Club website
+# Bambubearl
 
-Catalog, ordering and custom 3D printing for the Earl Marriott Secondary School 3D Printing Club.
+The online catalog for **Bambubearl**, the Earl Marriott Secondary 3D Printing Club. Visitors browse what the club prints and what it costs; there's no cart or customer accounts. To get something, they email the club (bambearl@gmail.com) and pay in person at pickup.
 
-- **Catalog** with All, Hot, Seasonal, Classics and Clearance collections, plus a "Hot right now" row at the top
-- **Accounts**: sign up, sign in, password reset, profile, change password, delete account
-- **Ordering**: cart and checkout for catalog items, custom-order requests with quotes, order tracking in each account. Customers pay in person at pickup.
-- **Admin menu** (Settings ⚙ → Club administration, password protected): orders, pickup list, messages, catalog editor, filament and item stock, announcements, site settings, accounts (block troll accounts), admin password
-- **Themes**: White Oak, Meadow, Sunrise, Forest, Night, or Automatic
+**What visitors see**
+- The catalog: Basic, Gentleman, Traffic Cone, Santa, Elf, Gingerbread and Custom geese; the Death Whistle; the Infinity Cube; and custom 3D prints
+- Tabs for All, Hot, Holiday, Classics and Clearance (empty tabs stay visible), plus search, sort and category filters
+- Each item opens with photos, a size picker (Standard 23.46 mm, Jumbo 35.19 mm, SJM 93.84 mm, Super Jumbo 187.68 mm), the price for each size, colours, and an "Ask about this item" email button
+- A goose price chart: Classic, Special and Custom geese, with regular and holiday sale prices
+- Liquid-glass design with themes in ⚙ Settings
 
-It's a single static page (`index.html`) backed by Firebase for accounts and data. Everything after setup is done from the admin menu. No code editing.
+**What admins can do** (⚙ Settings → Club admin)
+- Edit right on the catalog: every card shows Edit, Duplicate, Hide and Delete, and each collection starts with an "Add an item" tile
+- Catalog tab: reorder items, move them between collections, mark items Hot or sold out. Each item either uses the goose price chart (Classic, Special or Custom), has its own sizes and prices, or is "custom quote"
+- Site settings → Goose price chart: change the goose sizes and prices in one place; every goose updates
+- Site settings → Sale: switch the holiday sale prices on or off
+- Stock tab: mark filament colours out of stock, track grams left, count items already printed
+- Announcements: banners at the top of the site
+- Site settings: holiday decorations on or off, headline text, season name, collection descriptions, email, rates, filament colours
+- Admins: see who has access, remove access, change the club admin password
 
----
-
-## One-time setup (about 15 minutes)
-
-### 1. Put the site on GitHub and Vercel
-1. Create a new GitHub repository and upload everything in this folder (`index.html`, `firebase-config.js`, `vercel.json`, `README.md`, `.gitignore`).
-2. On [vercel.com](https://vercel.com), choose **Add New → Project**, import the repository, and press **Deploy**. No build settings are needed.
-3. The site goes live in demo mode right away. You'll get an address like `your-project.vercel.app`.
-
-### 2. Create the Firebase project (free)
-1. Go to [console.firebase.google.com](https://console.firebase.google.com) and **Add project**. Google Analytics is optional.
-2. **Build → Authentication → Get started → Email/Password → Enable → Save.**
-3. Still in Authentication, open **Settings → Authorized domains → Add domain** and add your Vercel address (for example `your-project.vercel.app`). Add your custom domain too if you have one.
-4. **Build → Firestore Database → Create database.** Pick a location near you (for example `northamerica-northeast1`) and start in **production mode**.
-5. In Firestore, open the **Rules** tab, delete what's there, paste the contents of the `firestore.rules` file you were given separately, and press **Publish**.
-   - Keep `firestore.rules` private. Don't upload it to GitHub, because it holds the starting admin password.
-
-### 3. Connect the site to Firebase
-1. In Firebase, open **Project settings (gear) → General → Your apps → Web (</>)**, register an app (no hosting needed), and copy the `firebaseConfig` values.
-2. On GitHub, open `firebase-config.js`, press the pencil icon, paste the values into the matching fields, and **Commit changes**.
-3. Vercel redeploys automatically in about a minute. The yellow "Demo mode" bar disappears when it's connected.
-
-### 4. Become an admin and load the catalog
-1. On the live site, press **Sign in → Create account** and make your account.
-2. Press the **⚙ Settings** button, scroll to **Club administration**, and enter the admin password.
-3. In the admin menu, open **Catalog → Load starter catalog** to add example items. Then edit, replace or delete them.
-4. Open **Site settings** to check the email, pickup details and payment note.
-5. Recommended: open **Security** and change the admin password to a new one only your club knows.
-
-Other club leaders make their own accounts and unlock the admin menu the same way.
+Every change saves to Firebase and appears for everyone right away. You never need to edit code.
 
 ---
 
-## Everyday use (admin menu)
-| Tab | What it's for |
-|---|---|
-| Overview | What needs doing, sales, best sellers |
-| Orders | Confirm orders, send quotes for custom jobs, mark as being made or ready, cancel troll orders with a reason, block the account |
-| Pickup list | Everyone waiting to collect. Press "Picked up & paid" when they pay |
-| Messages | Questions from signed-in customers |
-| Catalog | Add, edit, hide, delete, reorder items. Move between Classics, Seasonal and Clearance. Mark items Hot |
-| Stock | Mark filament colours out of stock, track spool grams, count item stock |
-| Announcements | Banners at the top of the site |
-| Site settings | Pause ordering, season name, descriptions, email, pickup and payment info, rates, filament colours |
-| Accounts | Every account, block or unblock, remove admin access |
-| Security | Change the admin password |
+## Setup (about 15 minutes)
 
-**Editing right on the catalog:** when you're signed in as an admin, every item on the public catalog shows **Edit**, **Duplicate**, **Hide** and **Delete** buttons, and each collection starts with an **Add an item** tile. Hidden items stay visible to admins (faded) so you can show them again.
+### 1. GitHub and Vercel
+1. Make a new GitHub repository and upload everything in this folder, including the `img` folder with the product photos.
+2. On vercel.com, choose **Add New → Project**, import the repository, and press **Deploy**. It goes live in demo mode.
 
-All changes save to the live site instantly for every visitor. Nothing ever needs a code editor.
+### 2. Firebase (free)
+1. Go to console.firebase.google.com and choose **Create a project**.
+2. Go to **Build → Authentication → Get started → Email/Password**, turn on the first switch and **Save**. This is only for admin logins.
+3. Go to **Authentication → Settings → Authorized domains → Add domain** and enter your Vercel address, for example `bambubearl.vercel.app`.
+4. Go to **Build → Firestore Database → Create database**:
+   - Choose Standard edition, keep the ID as **(default)**, pick a nearby location, and choose **production mode**.
+   - Open the **Rules** tab, replace everything with the contents of `firestore.rules`, and press **Publish**.
+   - Keep `firestore.rules` private, because it holds the starting club admin password. Never upload it to GitHub.
+5. Go to **Project settings → Your apps → Web `</>`**, register an app, and copy the config values.
 
-## Free plan limits
-Firebase's free Spark plan includes 50,000 document reads and 20,000 writes per day, which is plenty for a school club. Product photos are resized automatically and stored with the item.
+### 3. Connect
+1. On GitHub, open `firebase-config.js`, press the pencil icon, paste in the values, and **Commit changes**.
+2. Wait about a minute for Vercel to redeploy. Admin changes now save for everyone.
+
+### 4. First admin
+1. Open ⚙ Settings → Club admin → **New admin**.
+2. Enter your email, a password of your own, and the club admin password.
+3. Open the admin menu → **Catalog → Load our product list**. If you loaded the old sample items before, use **Reset to our product list** instead.
+4. In **Admins**, change the club admin password to a new one.
+
+### Check it works
+- Open the site in a private window: the catalog shows and there are no admin buttons.
+- Change a price as an admin, then refresh the private window. The new price shows.
+- If something fails, press F12 → Console. `auth/unauthorized-domain` means you need to add your address to Authorized domains. `permission-denied` means the rules weren't published.
